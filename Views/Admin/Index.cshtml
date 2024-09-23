@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Admin Home";
+}
+
+<h1>Admin Dashboard</h1>
+
+<div class="admin-buttons">
+    <a asp-controller="AdminBooking" asp-action="ManageBookings" class="btn btn-primary">
+        Manage Bookings
+    </a>
+
+    <a asp-controller="AdminMenu" asp-action="ManageMenu" class="btn btn-primary">
+        Manage Menu
+    </a>
+
+    <a asp-controller="AdminTable" asp-action="ManageTables" class="btn btn-primary">
+        Manage Tables
+    </a>
+</div>

@@ -1,0 +1,17 @@
+﻿@model AddTable
+
+<h1>Add new Table</h1>
+
+<form asp-action="AddTable" method="post">
+    <div class="form-group">
+        <label asp-for="TableNumber"></label>
+        <input asp-for="TableNumber" class="form-control" />
+        <span asp-validation-for="TableNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Seats"></label>
+        <input asp-for="Seats" class="form-control" />
+        <span asp-validation-for="Seats" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Table</button>
+</form>

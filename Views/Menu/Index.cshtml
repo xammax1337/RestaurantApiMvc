@@ -1,0 +1,17 @@
+﻿@model List<MenuItem>
+
+<h1>Our Menu</h1>
+<p>List of available dishes</p>
+
+@foreach (var menuItem in Model.Where(m => m.Available))  // Filter only available items
+{
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">@menuItem.Name</h5>
+            </div>
+            <p>Price: @menuItem.Price</p>
+            <p class="mb-1">@menuItem.Description</p>
+        </a>
+    </div>
+}

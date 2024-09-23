@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<MenuItem>
+
+<section class="jumbotron text-center" style="padding: 1.5rem">
+    <div class="container">
+        <h1 class="jumbotron-heading">The Cozy Fork</h1>
+        <p class="lead">
+            Welcome to The Cozy Fork
+            Where comfort meets culinary excellence. At The Cozy Fork, we believe dining is more than just a meal—it's an experience. Nestled in the heart of the city, our restaurant offers a warm, inviting atmosphere where you can enjoy handcrafted dishes made with locally-sourced ingredients. Whether you're here for a casual brunch, an intimate dinner, or a gathering with friends, every bite is a celebration of flavor and comfort. Come in, take a seat, and make yourself at home.
+        </p>
+        <p>
+            <a href="/Booking" class="btn btn-primary my-2">Book a table!</a>
+            <a href="/Menu" class="btn btn-primary my-2">View our menu!</a>
+        </p>
+    </div>
+</section>
+
+<hr class="featurette-divider">
+
+
+<div class="row featurette">
+    <div class="col-md-7">
+        <h2 class="featurette-heading">Step Inside the Warmth</h2>
+        <p class="lead">Our thoughtfully designed space combines rustic charm with modern comfort, creating the perfect setting for your dining experience. From the soft glow of ambient lighting to the cozy seating, every detail invites you to relax and savor the moment. Whether you're enjoying a quiet meal or celebrating with loved ones, The Cozy Fork feels like home away from home. Welcome to your new favorite spot.</p>
+    </div>
+    <div class="col-md-5">
+        <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" style="width: 500px; height: 500px;" src="~/images/Interiorview.webp" data-holder-rendered="true">
+    </div>
+</div>
+
+<hr class="featurette-divider">
+
+<h3>Our most popular dishes!</h3>
+<ul class="list-unstyled">
+    @{
+        var menuItem1 = Model.FirstOrDefault(m => m.Id == 1);
+        var menuItem2 = Model.FirstOrDefault(m => m.Id == 3);
+        var menuItem3 = Model.FirstOrDefault(m => m.Id == 5);
+    }
+
+    @if (menuItem1 != null)
+    {
+        <li class="media">
+            <img class="mr-3" src="images/burger1.webp" alt="Generic placeholder image" style="width: 200px; height: 200px;">
+            <div class="media-body">
+                <h5 class="mt-0 mb-1">@menuItem1.Name</h5>
+                <p>@menuItem1.Description</p>
+            </div>
+        </li>
+    }
+
+    @if (menuItem2 != null)
+    {
+        <li class="media">
+            <img class="mr-3" src="images/burger2.webp" alt="Generic placeholder image" style="width: 200px; height: 200px";>
+            <div class="media-body">
+                <h5 class="mt-0 mb-1">@menuItem2.Name</h5>
+                <p>@menuItem2.Description</p>
+            </div>
+        </li>
+    }
+
+    @if (menuItem3 != null)
+    {
+        <li class="media">
+            <img class="mr-3" src="images/steak.webp" alt="Generic placeholder image" style="width: 200px; height: 200px;">
+            <div class="media-body">
+                <h5 class="mt-0 mb-1">@menuItem3.Name</h5>
+                <p>@menuItem3.Description</p>
+            </div>
+        </li>
+    }
+    <a href="/Menu" class="btn btn-primary my-2">View our menu!</a>
+</ul>

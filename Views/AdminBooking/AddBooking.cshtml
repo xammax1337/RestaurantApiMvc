@@ -1,0 +1,23 @@
+﻿@model AddBooking
+
+<h1>Add new booking</h1>
+
+<form asp-action="AddBooking" method="post">
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BookingTime"></label> <!-- Use BookingTime instead of TimeBooked -->
+        <input asp-for="BookingTime" class="form-control" type="datetime-local" />
+        <span asp-validation-for="BookingTime" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SeatsRequired"></label>
+        <input asp-for="SeatsRequired" class="form-control" />
+        <span asp-validation-for="SeatsRequired" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Booking</button>
+</form>

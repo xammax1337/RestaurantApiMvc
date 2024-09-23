@@ -1,0 +1,32 @@
+﻿@model List<Booking>
+
+<h1>Bookings</h1>
+<p>List of current bookings</p>
+<a asp-action="AddBooking" asp-controller="AdminBooking" class="btn btn-outline-primary" style="margin-bottom:1rem">Add new booking</a>
+@foreach(var booking in Model)
+{
+    <div class="card" style="width:18rem">
+        <div class="card-body">
+            <h5 class="card-header">Booking ID: @booking.Id</h5>
+            <h5 class="card-header">Date: @booking.TimeBooked</h5>
+
+            <!-- Customer information -->
+            <p class="card-text">@booking.Customer.FirstName @booking.Customer.LastName</p>
+            <p class="card-text">Email: @booking.Customer.Email</p>
+            <p class="card-text">Phone: @booking.Customer.PhoneNumber</p>
+
+            <!-- Table information -->
+            <p class="card-subtitle">Table Number: @booking.Table.TableNumber</p>
+            <p class="card-subtitle">Seats Required: @booking.CustomerCount / @booking.Table.Seats</p>
+        </div>
+        <form method="post" asp-action="Delete" asp-controller="AdminBooking" asp-route-id="@booking.Id" style="display:inline;" onsubmit="return confirmDelete();">
+            <button type="submit" class="btn btn-danger" style="margin-top: 1rem">Delete</button>
+        </form>
+
+        <script>
+            function confirmDelete() {
+                return confirm('Are you sure you want to delete this item?');
+            }
+        </script>
+    </div>
+}
