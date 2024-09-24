@@ -19,6 +19,9 @@
             <p class="card-subtitle">Table Number: @booking.Table.TableNumber</p>
             <p class="card-subtitle">Seats Required: @booking.CustomerCount / @booking.Table.Seats</p>
         </div>
+
+        <a class="card-link" style="margin:1rem" asp-action="Edit" asp-controller="AdminBooking" asp-route-id="@booking.Id">Edit</a>
+
         <form method="post" asp-action="Delete" asp-controller="AdminBooking" asp-route-id="@booking.Id" style="display:inline;" onsubmit="return confirmDelete();">
             <button type="submit" class="btn btn-danger" style="margin-top: 1rem">Delete</button>
         </form>

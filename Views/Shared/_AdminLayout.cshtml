@@ -18,10 +18,10 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("ManageMenu", "AdminMenu")">Menu Management</a>
+                    <a class="nav-link" href="@Url.Action("ManageBookings", "AdminBooking")">Booking Management</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("ManageBookings", "AdminBooking")">Booking Management</a>
+                    <a class="nav-link" href="@Url.Action("ManageMenu", "AdminMenu")">Menu Management</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("ManageTables", "AdminTable")">Table Management</a>
@@ -30,6 +30,10 @@
                     <a class="nav-link" href="@Url.Action("ManageCustomers", "AdminCustomer")">Customer Management</a>
                 </li>
             </ul>
+            <div class="navbar-nav">
+                <a href="/signin" class="btn btn-outline-primary mr-2">Sign In</a>
+                <a href="/signout" class="btn btn-primary">Sign Out</a>
+            </div>
         </div>
     </nav>
 

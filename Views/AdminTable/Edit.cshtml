@@ -1,0 +1,41 @@
+﻿@model Table
+
+<h2>Edit table</h2>
+
+@if (Model != null)
+{
+    <p>Current Name: @Model.TableNumber</p>
+    <p>Current Description: @Model.Seats</p>
+}
+else
+{
+    <p>No item found.</p>
+}
+
+<form method="post" asp-action="Edit">
+    <div class="form-group">
+        <label asp-for="TableNumber">Name</label>
+        <input asp-for="TableNumber" class="form-control" />
+        <span asp-validation-for="TableNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Seats">Description</label>
+        <input asp-for="Seats" class="form-control" />
+        <span asp-validation-for="Seats" class="text-danger"></span>
+    </div>
+    <!-- Hidden field for Id -->
+    <input type="hidden" asp-for="TableId" />
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<form method="post" asp-action="Delete" asp-controller="AdminMenu" style="display:inline;" onsubmit="return confirmDelete();">
+    <input type="hidden" name="id" value="@Model.TableId" />
+    <button type="submit" class="btn btn-danger" style="margin-top: 1rem">Delete</button>
+</form>
+
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this item?');
+    }
+</script>
