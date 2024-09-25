@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RestaurantApiMvc.Models;
-using static RestaurantApiMvc.Models.Login;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using static RestaurantApiMvc.Models.LoginViewModel;
 
 namespace RestaurantApiMvc.Controllers
 {
@@ -27,15 +31,38 @@ namespace RestaurantApiMvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(Login model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                // Handle login logic here
-                return RedirectToAction("Index", "Home");
-            }
+            var response = await _client.PostAsJsonAsync($"{baseUri}api/Account/login", model);
 
-            return View(model);
+            if (!response.IsSuccessStatusCode)
+            {
+                return View(model);
+            }
+                
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var token = JsonConvert.DeserializeObject<TokenResponse>(jsonResponse);
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token.Token);
+            var claims = jwtToken.Claims.ToList();
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = jwtToken.ValidTo
+            });
+
+            HttpContext.Response.Cookies.Append("jwtToken", token.Token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = jwtToken.ValidTo
+            });
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -45,7 +72,7 @@ namespace RestaurantApiMvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(Register model)
+        public IActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -54,6 +81,22 @@ namespace RestaurantApiMvc.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Response.Cookies.Delete("jwtToken");
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied(string returnUrl)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
         }
     }
 }

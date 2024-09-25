@@ -3,7 +3,7 @@
 }
 @model List<MenuItem>
 
-<section class="jumbotron text-center" style="padding: 1.5rem">
+<section class="jumbotron" style="padding-top: 1.5rem">
     <div class="container">
         <h1 class="jumbotron-heading">The Cozy Fork</h1>
         <p class="lead">
@@ -12,7 +12,7 @@
         </p>
         <p>
             <a href="/Booking" class="btn btn-primary my-2">Book a table!</a>
-            <a href="/Menu" class="btn btn-primary my-2">View our menu!</a>
+            <a href="/Menu" class="btn btn-outline-primary my-2">View our menu!</a>
         </p>
     </div>
 </section>
@@ -32,45 +32,47 @@
 
 <hr class="featurette-divider">
 
-<h3>Our most popular dishes!</h3>
-<ul class="list-unstyled">
-    @{
-        var menuItem1 = Model.FirstOrDefault(m => m.Id == 1);
-        var menuItem2 = Model.FirstOrDefault(m => m.Id == 3);
-        var menuItem3 = Model.FirstOrDefault(m => m.Id == 5);
-    }
-
-    @if (menuItem1 != null)
-    {
-        <li class="media">
-            <img class="mr-3" src="images/burger1.webp" alt="Generic placeholder image" style="width: 200px; height: 200px;">
-            <div class="media-body">
-                <h5 class="mt-0 mb-1">@menuItem1.Name</h5>
-                <p>@menuItem1.Description</p>
+<h3>Top 3 from the menu:</h3>
+@{
+    var menuItem1 = Model.FirstOrDefault(m => m.Id == 1);
+    var menuItem2 = Model.FirstOrDefault(m => m.Id == 3);
+    var menuItem3 = Model.FirstOrDefault(m => m.Id == 5);
+}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card h-100">
+                @if (menuItem1 != null)
+                {
+                    <img class="card-img-top" src="images/burger1.webp" alt="Generic placeholder image">
+                    <div class="card-body">
+                        <h5 class="card-title">@menuItem1.Name</h5>
+                        <p class="card-text">@menuItem1.Description</p>
+                    </div>
+                }
             </div>
-        </li>
-    }
-
-    @if (menuItem2 != null)
-    {
-        <li class="media">
-            <img class="mr-3" src="images/burger2.webp" alt="Generic placeholder image" style="width: 200px; height: 200px";>
-            <div class="media-body">
-                <h5 class="mt-0 mb-1">@menuItem2.Name</h5>
-                <p>@menuItem2.Description</p>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                @if (menuItem2 != null)
+                {
+                <img class="card-img-top" src="images/burger2.webp" alt="Generic placeholder image">
+                    <div class="card-body">
+                        <h5 class="card-title">@menuItem2.Name</h5>
+                        <p class="card-text">@menuItem2.Description</p>
+                    </div>
+                }
             </div>
-        </li>
-    }
-
-    @if (menuItem3 != null)
-    {
-        <li class="media">
-            <img class="mr-3" src="images/steak.webp" alt="Generic placeholder image" style="width: 200px; height: 200px;">
-            <div class="media-body">
-                <h5 class="mt-0 mb-1">@menuItem3.Name</h5>
-                <p>@menuItem3.Description</p>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                @if (menuItem3 != null)
+                {
+                <img class="card-img-top" src="images/steak.webp" alt="Generic placeholder image">
+                    <div class="card-body">
+                        <h5 class="card-title">@menuItem3.Name</h5>
+                        <p class="card-text">@menuItem3.Description</p>
+                    </div>
+                }
             </div>
-        </li>
-    }
-    <a href="/Menu" class="btn btn-primary my-2">View our menu!</a>
-</ul>
+        </div>
+</div>

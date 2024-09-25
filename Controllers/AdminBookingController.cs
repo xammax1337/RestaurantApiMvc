@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RestaurantApiMvc.Models;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace RestaurantApiMvc.Controllers
 {
+    [Authorize]
     public class AdminBookingController : Controller
     {
         private readonly HttpClient _client;
@@ -14,9 +17,13 @@ namespace RestaurantApiMvc.Controllers
             _client = client;
         }
 
+        [Authorize]
         public async Task <IActionResult> ManageBookings()
         {
             ViewData["Title"] = "AdminBooking";
+
+            var token = HttpContext.Request.Cookies["jwtToken"];
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             var response = await _client.GetAsync($"{baseUri}api/Booking/GetAllBookings");
             var json = await response.Content.ReadAsStringAsync();

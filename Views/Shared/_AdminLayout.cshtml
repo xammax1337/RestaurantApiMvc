@@ -30,9 +30,23 @@
                     <a class="nav-link" href="@Url.Action("ManageCustomers", "AdminCustomer")">Customer Management</a>
                 </li>
             </ul>
+            @{
+                var isAuthenticated = User.Identity.IsAuthenticated;
+                var userEmail = User.Identity.Name;
+            }
             <div class="navbar-nav">
-                <a href="/signin" class="btn btn-outline-primary mr-2">Sign In</a>
-                <a href="/signout" class="btn btn-primary">Sign Out</a>
+                @if (isAuthenticated)
+                {
+                    <span class="navbar-text my-1" style="margin-right: 0.5rem">Welcome, @userEmail</span>
+                    <form asp-controller="Account" asp-action="Logout" method="post">
+                        <button type="submit" class="btn btn-link">Log out</button>
+                    </form>
+                }
+                else
+                {
+                    <a href="@Url.Action("Login", "Account")" class="btn btn-primary my-1" style="margin-right: 0.5rem">Sign In</a>
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-outline-primary my-1">Sign Up</a>
+                }
             </div>
         </div>
     </nav>
